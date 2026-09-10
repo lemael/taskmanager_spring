@@ -1,0 +1,12 @@
+@import "tailwindcss";
+
+/* Configuration globale de l'application pour occuper 100% de la largeur et hauteur */
+html,
+body,
+#app {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  min-height: 100vh;
+  font-family: 'Inter', sans-serif;
+}

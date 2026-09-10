@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { VehicleStatus } from '@/stores/useVehicleStore';
+import type { VehicleStatus } from '@/stores/useAutoStore';
 
 const props = defineProps<{
   status: VehicleStatus;

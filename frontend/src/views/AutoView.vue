@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/AppLayout.vue';
-import VehicleStatusBadge from '@/components/autos/VehicleStatusBadge.vue';
-import { useVehicleStore } from '@/stores/useVehicleStore';
 
-const vehicleStore = useVehicleStore();
+import AutoStatusBadge from '@/components/autos/AutoStatusBadge.vue';
+import { useAutoStore } from '@/stores/useAutoStore';
+
+const autoStore = useAutoStore();
 </script>
 
 <template>
@@ -43,22 +43,22 @@ const vehicleStore = useVehicleStore();
       <div class="grid grid-cols-2 md:grid-cols-4">
         <div class="px-6 py-4 border-r border-b md:border-b-0 border-gray-200">
           <span class="text-base font-normal text-gray-900">
-            {{ vehicleStore.stats.totalFleet }}
+            {{ autoStore.stats.totalFleet }}
           </span>
         </div>
         <div class="px-6 py-4 border-b md:border-b-0 md:border-r border-gray-200">
           <span class="text-base font-normal text-gray-900">
-            {{ vehicleStore.stats.inService }}
+            {{ autoStore.stats.inService }}
           </span>
         </div>
         <div class="px-6 py-4 border-r border-gray-200">
           <span class="text-base font-normal text-gray-900">
-            {{ vehicleStore.stats.available }}
+            {{ autoStore.stats.available }}
           </span>
         </div>
         <div class="px-6 py-4">
           <span class="text-base font-normal text-amber-500">
-            {{ vehicleStore.stats.inspection }}
+            {{ autoStore.stats.inspection }}
           </span>
         </div>
       </div>
@@ -110,10 +110,10 @@ const vehicleStore = useVehicleStore();
 
           <!-- Table Rows Grid -->
           <div
-            v-for="(vehicle, index) in vehicleStore.vehicles"
+            v-for="(vehicle, index) in autoStore.autos"
             :key="vehicle.id"
             class="grid grid-cols-6 items-center hover:bg-gray-50/50 transition-colors"
-            :class="{ 'border-b border-gray-200': index !== vehicleStore.vehicles.length - 1 }"
+            :class="{ 'border-b border-gray-200': index !== autoStore.autos!.length - 1 }"
           >
             <div class="px-6 py-4 text-sm font-normal text-gray-900">
               {{ vehicle.plateNumber }}
@@ -131,7 +131,7 @@ const vehicleStore = useVehicleStore();
               {{ vehicle.tuvInspection }}
             </div>
             <div class="px-6 py-4">
-              <VehicleStatusBadge :status="vehicle.status" />
+              <AutoStatusBadge :status="vehicle.status" />
             </div>
           </div>
         </div>

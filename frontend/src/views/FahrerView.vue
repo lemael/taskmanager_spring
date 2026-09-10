@@ -1,8 +1,7 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/AppLayout.vue';
-import DriverStatusBadge from '@/components/fahrer/DriverStatusBadge.vue';
-import { useDriverStore } from '@/stores/useDriverStore';
-const driverStore = useDriverStore();
+import FahrerStatusBadge from '@/components/fahrer/FahrerStatusBadge.vue';
+import { useFahrerStore } from '@/stores/useFahrerStore';
+const fahrerStore = useFahrerStore();
 </script>
 
 <template>
@@ -42,22 +41,22 @@ const driverStore = useDriverStore();
       <div class="grid grid-cols-2 md:grid-cols-4">
         <div class="p-5 md:px-8 border-r border-b md:border-b-0 border-gray-200">
           <span class="text-2xl font-semibold text-gray-900">
-            {{ driverStore.stats.totalStaff }}
+            {{ fahrerStore.stats.totalStaff }}
           </span>
         </div>
         <div class="p-5 md:px-8 border-b md:border-b-0 md:border-r border-gray-200">
           <span class="text-2xl font-semibold text-gray-900">
-            {{ driverStore.stats.active }}
+            {{ fahrerStore.stats.active }}
           </span>
         </div>
         <div class="p-5 md:px-8 border-r border-gray-200">
           <span class="text-2xl font-semibold text-gray-900">
-            {{ driverStore.stats.onBreak }}
+            {{ fahrerStore.stats.onBreak }}
           </span>
         </div>
         <div class="p-5 md:px-8">
           <span class="text-2xl font-semibold text-amber-500">
-            {{ driverStore.stats.onLeave }}
+            {{ fahrerStore.stats.onLeave }}
           </span>
         </div>
       </div>
@@ -94,17 +93,17 @@ const driverStore = useDriverStore();
 
           <!-- Table Rows -->
           <div
-            v-for="(driver, index) in driverStore.drivers"
-            :key="driver.id"
+            v-for="(fahrer, index) in fahrerStore.fahrers"
+            :key="fahrer.id"
             class="grid grid-cols-5 px-8 py-4 items-center hover:bg-gray-50/50 transition-colors"
-            :class="{ 'border-b border-gray-200': index !== driverStore.drivers.length - 1 }"
+            :class="{ 'border-b border-gray-200': index !== fahrerStore.fahrers.length - 1 }"
           >
-            <span class="text-sm font-normal text-gray-900">{{ driver.name }}</span>
-            <span class="text-sm font-normal text-gray-900">{{ driver.phone }}</span>
-            <span class="text-sm font-normal text-gray-900">{{ driver.vehicle }}</span>
-            <span class="text-sm font-normal text-gray-900">{{ driver.activeTour }}</span>
+            <span class="text-sm font-normal text-gray-900">{{ fahrer.name }}</span>
+            <span class="text-sm font-normal text-gray-900">{{ fahrer.phone }}</span>
+            <span class="text-sm font-normal text-gray-900">{{ fahrer.vehicle }}</span>
+            <span class="text-sm font-normal text-gray-900">{{ fahrer.activeTour }}</span>
             <div>
-              <DriverStatusBadge :status="driver.status" />
+              <FahrerStatusBadge :status="fahrer.status" />
             </div>
           </div>
         </div>

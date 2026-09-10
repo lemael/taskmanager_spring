@@ -22,7 +22,7 @@ const navigation = [
       <aside class="w-[272px] bg-white border-r border-gray-200 hidden md:flex flex-col">
         <!-- Logo Header -->
         <div class="h-[56px] bg-gray-900 flex items-center px-6">
-          <span class="text-white text-base font-semibold">ParketManager</span>
+          <span class="text-white text-base font-semibold">PaketManager</span>
         </div>
 
         <!-- Navigation Links -->
@@ -49,7 +49,7 @@ const navigation = [
         <!-- Navbar Header -->
         <header class="h-[56px] bg-gray-900 flex items-center justify-between md:justify-end px-6">
           <div class="flex md:hidden items-center">
-            <span class="text-white font-semibold">ParcelManager</span>
+            <span class="text-white font-semibold">PaketManager</span>
           </div>
           <span class="text-gray-400 text-xs md:text-sm">
             {{ dashboardStore.user.role }} ({{ dashboardStore.user.name }})

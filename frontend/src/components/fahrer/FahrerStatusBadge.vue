@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import type { DriverStatus } from '@/stores/useDriverStore';
+import type { FahrerStatus } from '@/services/fahrer.service';
 
 const props = defineProps<{
-  status: DriverStatus;
+  status: FahrerStatus;
 }>();
 
-const badgeStyles: Record<DriverStatus, string> = {
+const badgeStyles: Record<FahrerStatus, string> = {
   IN_AUSLIEFERUNG: 'bg-blue-50 text-blue-700 border-blue-200',
   PAUSIERT: 'bg-amber-50 text-amber-800 border-amber-200',
   VERFÜGBAR: 'bg-emerald-50 text-emerald-800 border-emerald-200',

@@ -1,9 +1,8 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/AppLayout.vue';
-import ParcelStatusBadge from '@/components/colis/ColisStatusBadge.vue';
-import { useParcelStore } from '@/stores/useParcelStore';
+import ColiStatusBadge from '@/components/colis/ColisStatusBadge.vue';
+import { useColiStore } from '@/stores/useColiStore';
 
-const parcelStore = useParcelStore();
+const coliStore = useColiStore();
 </script>
 
 <template>
@@ -30,7 +29,7 @@ const parcelStore = useParcelStore();
       <!-- Card Metrics Rows -->
       <div class="divide-y divide-gray-200">
         <div
-          v-for="item in parcelStore.metrics"
+          v-for="item in coliStore.metrics"
           :key="item.label"
           class="grid grid-cols-2 hover:bg-gray-50/30 transition-colors"
         >
@@ -79,28 +78,28 @@ const parcelStore = useParcelStore();
 
           <!-- Table Body Rows Grid -->
           <div
-            v-for="(parcel, index) in parcelStore.parcels"
-            :key="parcel.id"
+            v-for="(coli, index) in coliStore.colis"
+            :key="coli.id"
             class="grid grid-cols-6 items-center hover:bg-gray-50/50 transition-colors"
-            :class="{ 'border-b border-gray-200': index !== parcelStore.parcels.length - 1 }"
+            :class="{ 'border-b border-gray-200': index !== coliStore.colis!.length - 1 }"
           >
             <div class="px-6 py-4.5 text-sm font-normal text-gray-700">
-              {{ parcel.id }}
+              {{ coli.id }}
             </div>
             <div class="px-6 py-4.5 text-sm font-normal text-gray-700">
-              {{ parcel.sender }}
+              {{ coli.sender }}
             </div>
             <div class="px-6 py-4.5 text-sm font-normal text-gray-700">
-              {{ parcel.recipient }}
+              {{ coli.recipient }}
             </div>
             <div class="px-6 py-4.5 text-sm font-normal text-gray-700">
-              {{ parcel.formatAndWeight }}
+              {{ coli.formatAndWeight }}
             </div>
             <div class="px-6 py-4.5">
-              <ParcelStatusBadge :status="parcel.status" />
+              <ColiStatusBadge :status="coli.status" />
             </div>
             <div class="px-6 py-4.5 text-sm font-normal text-gray-700">
-              {{ parcel.transportId }}
+              {{ coli.transportId }}
             </div>
           </div>
         </div>

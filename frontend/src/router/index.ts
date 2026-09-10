@@ -4,8 +4,8 @@ import { createRouter, createWebHistory, type RouteRecordRaw } from 'vue-router'
 const DashboardView = () => import('@/views/DashboardView.vue');
 const ColisView = () => import('@/views/ColisView.vue');
 const TransportsView = () => import('@/views/TransportsView.vue');
-const DriversView = () => import('@/views/DriversView.vue');
-const VehiclesView = () => import('@/views/VehiclesView.vue');
+const FahrerView = () => import('@/views/FahrerView.vue');
+const AutoView = () => import('@/views/AutoView.vue');
 const KundenView = () => import('@/views/KundenView.vue');
 
 const routes: Array<RouteRecordRaw> = [
@@ -18,7 +18,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Dashboard',
     component: DashboardView,
     meta: {
-      title: 'Dashboard - ParcelManager',
+      title: 'Dashboard - PaketManager',
       requiresAuth: true,
     },
   },
@@ -27,7 +27,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Colis',
     component: ColisView,
     meta: {
-      title: 'Gestion des Colis - ParcelManager',
+      title: 'Gestion des Colis - PaketManager',
       requiresAuth: true,
     },
   },
@@ -36,25 +36,25 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Transports',
     component: TransportsView,
     meta: {
-      title: 'Transports - ParcelManager',
+      title: 'Transports - PaketManager',
       requiresAuth: true,
     },
   },
   {
     path: '/fahrer',
-    name: 'Drivers',
-    component: DriversView,
+    name: 'Fahrer',
+    component: FahrerView,
     meta: {
-      title: 'Chauffeurs (Fahrer) - ParcelManager',
+      title: 'Chauffeurs (Fahrer) - PaketManager',
       requiresAuth: true,
     },
   },
   {
     path: '/autos',
-    name: 'Vehicles',
-    component: VehiclesView,
+    name: 'Autos',
+    component: AutoView,
     meta: {
-      title: 'Véhicules (Autos) - ParcelManager',
+      title: 'Véhicules (Autos) - PaketManager',
       requiresAuth: true,
     },
   },
@@ -63,7 +63,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'Kunden',
     component: KundenView,
     meta: {
-      title: 'Kunden - ParcelManager',
+      title: 'Kunden - PaketManager',
       requiresAuth: true,
     },
   },
@@ -73,7 +73,7 @@ const routes: Array<RouteRecordRaw> = [
     name: 'NotFound',
     component: () => import('@/views/NotFoundView.vue'),
     meta: {
-      title: 'Page non trouvée - ParcelManager',
+      title: 'Page non trouvée - PaketManager',
     },
   },
 ];

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import AppLayout from '@/layouts/AppLayout.vue';
 import KundenBadge from '@/components/kunden/KundenBadge.vue';
-import { useCustomerStore } from '@/stores/useCustomerStore';
+import { useCustomerStore } from '@/stores/useKundenStore';
 
 const customerStore = useCustomerStore();
 </script>

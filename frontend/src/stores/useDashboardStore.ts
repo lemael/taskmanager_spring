@@ -1,11 +1,12 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
+import { transportService } from '@/services/transport.service';
+import type { TransportStatus } from '@/services/transport.service';
 
-export type TransportStatus = 'IN_TRANSIT' | 'PICKED_UP' | 'DELIVERED' | 'PENDING';
 
 export interface Transport {
   id: string;
-  driver: string;
+  fahrer: string;
   status: TransportStatus;
 }
 
@@ -17,31 +18,55 @@ export interface DashboardStats {
 }
 
 export const useDashboardStore = defineStore('dashboard', () => {
-  // State
+  const loading = ref<boolean>(false);
+  const error = ref<string | null>(null);
+  const transports = ref<Transport[]>([]);
   const user = ref({ name: 'Thomas Müller', role: 'Dispatcher' });
 
   const stats = ref<DashboardStats>({
-    total: 124,
-    inProgress: 32,
-    delivered: 87,
-    pending: 5,
+    total: 0,
+    inProgress: 0,
+    delivered: 0,
+    pending: 0,
   });
+   const recentTransports = (n: number) => {
+    return transports.value.slice(0, n);
+  };
+  const calculateStats = () => {
+    const total = transports.value.length;
+    const inProgress = transports.value.filter(t => t.status === 'IN_TRANSIT').length;
+    const delivered = transports.value.filter(t => t.status === 'DELIVERED').length;
+    const pending = transports.value.filter(t => t.status === 'DELAYED').length;
 
-  const recentTransports = ref<Transport[]>([
-    { id: 'TR-1023', driver: 'Müller', status: 'IN_TRANSIT' },
-    { id: 'TR-1024', driver: 'Schmidt', status: 'PICKED_UP' },
-    { id: 'TR-1025', driver: 'Weber', status: 'DELIVERED' },
-  ]);
+    stats.value = {
+      total,
+      inProgress,
+      delivered,
+      pending,
+    };
+  };
+ 
+  const fetchRecentTransports = async () => {
+    try {
+      loading.value = true;
+      error.value = null;
+      const data= await transportService.getAll();
+      transports.value = data;
+      calculateStats();
+    } catch (err) {
+      error.value = (err as Error).message;
+    } finally {
+      loading.value = false;
+    }
+  };
 
-  // Actions
-  function setTransports(transports: Transport[]) {
-    recentTransports.value = transports;
-  }
+
+
 
   return {
     user,
     stats,
     recentTransports,
-    setTransports,
+    fetchRecentTransports,
   };
 });

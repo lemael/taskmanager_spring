@@ -1,0 +1,61 @@
+import { defineStore } from 'pinia';
+import { ref } from 'vue';
+import { kundeService } from '@/services/kunde.service';
+import type { Kunde } from '@/services/kunde.service';
+
+
+export interface KundeStats {
+  activeKunden: number;
+  monthlyDeliveries: number;
+  vipCustomers: number;
+}
+
+export const useKundenStore = defineStore('kunden', () => {
+  const kunden = ref<Kunde[]>([]);
+  const loading = ref<boolean>(false);
+  const error = ref<string | null>(null);
+  const stats = ref<KundeStats>({
+    activeKunden: 0,
+    monthlyDeliveries: 0,
+    vipCustomers: 0,
+  });
+
+  const calculateStats = () => {
+    const activeKunden = kunden.value.length;
+    const monthlyDeliveries = kunden.value.reduce((sum, kunde) => {
+      const volume = parseInt(kunde.monthlyVolume.split(' ')[0] ?? '0',10);
+      return sum + (isNaN(volume) ? 0 : volume);
+    }, 0);
+    const vipCustomers = kunden.value.filter(kunde => kunde.contract === 'VIP Express').length;
+
+    stats.value = {
+      activeKunden,
+      monthlyDeliveries,
+      vipCustomers,
+    };
+  };
+  const fetchKunden = async () => {
+    loading.value = true;
+    error.value = null;
+    try {
+      const data = await kundeService.getAll();
+      kunden.value = data;
+      calculateStats();
+    } catch (err: any) {
+      error.value = err.message || 'Fehler beim Laden der Kunden.';
+      console.error('Error fetching kunden:', err);
+    } finally {
+      loading.value = false;
+    }
+  };
+
+  return {
+    stats,
+    kunden,
+    loading,
+    error,
+    fetchKunden,
+    calculateStats,
+  };
+});
+

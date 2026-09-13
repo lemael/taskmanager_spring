@@ -2,9 +2,9 @@
 FROM node:20-alpine AS builder
 WORKDIR /app
 
-# Copie des dépendances et installation
+# Dans frontend/Dockerfile
 COPY package*.json ./
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Copie du code source et build de production (Vite)
 COPY . .

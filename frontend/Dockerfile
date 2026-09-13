@@ -1,5 +1,5 @@
 # --- Étape 1 : Build Node.js ---
-FROM node:20-alpine AS builder
+FROM node:22-alpine AS builder
 WORKDIR /app
 
 # Dans frontend/Dockerfile

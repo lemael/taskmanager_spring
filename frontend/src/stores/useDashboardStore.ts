@@ -1,14 +1,10 @@
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 import { transportService } from '@/services/transport.service';
-import type { TransportStatus } from '@/services/transport.service';
+import type { Transport } from '@/services/transport.service';
 
 
-export interface Transport {
-  id: string;
-  fahrer: string;
-  status: TransportStatus;
-}
+
 
 export interface DashboardStats {
   total: number;

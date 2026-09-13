@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { TransportStatus } from '@/stores/useTransportStore';
+import type { TransportStatus } from '@/services/transport.service';
 
 const props = defineProps<{
   status: TransportStatus;

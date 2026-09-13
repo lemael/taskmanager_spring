@@ -1,10 +1,15 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import StatCard from '@/components/StatCard.vue';
 import StatusBadge from '@/components/StatusBadge.vue';
 import { useDashboardStore } from '@/stores/useDashboardStore';
 
 const store = useDashboardStore();
+
+onMounted(() => {
+  store.fetchRecentTransports();
+});
 </script>
 
 <template>

@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import type { VehicleStatus } from '@/stores/useAutoStore';
+import type { AutoStatus } from '@/services/auto.service';
 
 const props = defineProps<{
-  status: VehicleStatus;
+  status: AutoStatus;
 }>();
 
-const badgeStyles: Record<VehicleStatus, string> = {
+const badgeStyles: Record<AutoStatus, string> = {
   IM_DIENST: 'bg-blue-50 text-blue-700 border-blue-200',
   VERFÜGBAR: 'bg-emerald-50 text-emerald-800 border-emerald-200',
   INSPEKTION: 'bg-amber-50 text-amber-800 border-amber-200',
-  DEFECKT: 'bg-red-50 text-red-700 border-red-200',
+  DEFEKT: 'bg-red-50 text-red-700 border-red-200',
 };
 
-const labels: Record<VehicleStatus, string> = {
+const labels: Record<AutoStatus, string> = {
   IM_DIENST: 'Im Dienst',
   VERFÜGBAR: 'Verfügbar',
   INSPEKTION: 'Inspektion',
-  DEFECKT: 'Defekt',
+  DEFEKT: 'Defekt',
 };
 </script>
 

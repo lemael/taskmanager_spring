@@ -1,4 +1,5 @@
-import { Auto,  autoService } from '@/services/auto.service';
+import { autoService } from '@/services/auto.service';
+import type { Auto } from '@/services/auto.service';
 import { defineStore } from 'pinia';
 import { ref } from 'vue';
 

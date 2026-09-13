@@ -2,7 +2,8 @@ package com.example.paketmanager.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 @Entity
 @Table(name = "colis")
 @Data
@@ -27,10 +28,12 @@ public class Coli {
 
     @ManyToOne
     @JoinColumn(name = "kunde_id")
+    @JsonIgnoreProperties("colis")
     private Kunde kunde;
 
     @ManyToOne
     @JoinColumn(name = "transport_id")
+    @JsonIgnoreProperties("colis")
     private Transport transport;
 
     public enum ColiStatus {
@@ -38,5 +41,14 @@ public class Coli {
         IN_ARBEIT,
         GELIEFERT,
         ANOMALIE
+    }
+
+    public void setColiId(Long coliId) {
+        this.id = coliId;
+    }
+
+    @JsonIgnore
+    public Long getColiId() {
+        return this.id;
     }
 }

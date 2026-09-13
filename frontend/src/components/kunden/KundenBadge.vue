@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { ContractType } from '@/stores/useKundenStore';
+import type { ContractType } from '@/services/kunde.service';
 
 const props = defineProps<{
   contract: ContractType;

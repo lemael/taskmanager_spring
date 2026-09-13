@@ -11,5 +11,6 @@ import java.util.Optional;
 public interface TransportRepository extends JpaRepository<Transport, Long> {
     Optional<Transport> findByTransportNumber(String transportNumber);
     List<Transport> findByStatus(Transport.TransportStatus status);
-    List<Transport> findByDriverId(Long driverId);
+    List<Transport> findByFahrerId(Long id);
+    List<Transport> findByAutoId(Long id);
 }

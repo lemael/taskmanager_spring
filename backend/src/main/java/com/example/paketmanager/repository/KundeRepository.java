@@ -10,5 +10,5 @@ import java.util.List;
 
 @Repository
 public interface KundeRepository extends JpaRepository<Kunde, Long> {
-    List<Coli> findByKundeId(Long kundeId);
+   // List<Coli> findByKundeId(Long id);
 }

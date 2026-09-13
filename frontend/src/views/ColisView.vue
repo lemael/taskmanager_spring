@@ -1,8 +1,13 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import ColiStatusBadge from '@/components/colis/ColisStatusBadge.vue';
 import { useColiStore } from '@/stores/useColiStore';
 
 const coliStore = useColiStore();
+
+onMounted(() => {
+  coliStore.fetchColis();
+});
 </script>
 
 <template>

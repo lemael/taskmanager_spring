@@ -1,6 +1,7 @@
 package com.example.paketmanager.controller;
 
 import com.example.paketmanager.model.Transport;
+import com.example.paketmanager.dto.TransportDto;
 import com.example.paketmanager.service.TransportService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/transports")
-@CrossOrigin(origins = "*")
 public class TransportController {
 
     private final TransportService transportService;
@@ -20,27 +20,27 @@ public class TransportController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Transport>> getAllTransports() {
-        return ResponseEntity.ok(transportService.getAllTransports());
+    public List<TransportDto> getAllTransports() {
+        return transportService.getAllTransports();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Transport> getTransportById(@PathVariable Long id) {
+    public ResponseEntity<TransportDto> getTransportById(@PathVariable Long id) {
         return transportService.getTransportById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Transport> createTransport(@RequestBody Transport transport) {
+    public ResponseEntity<TransportDto> createTransport(@RequestBody Transport transport) {
         return ResponseEntity.status(HttpStatus.CREATED).body(transportService.saveTransport(transport));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Transport> updateTransport(@PathVariable Long id, @RequestBody Transport transport) {
+    public ResponseEntity<TransportDto> updateTransport(@PathVariable Long id, @RequestBody Transport transport) {
         return transportService.getTransportById(id)
                 .map(existing -> {
-                    transport.setId(id);
+                    transport.setTransportId(id);
                     return ResponseEntity.ok(transportService.saveTransport(transport));
                 })
                 .orElse(ResponseEntity.notFound().build());

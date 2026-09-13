@@ -16,11 +16,25 @@ export const useFahrerStore = defineStore('fahrer', () => {
   const error = ref<string | null>(null);
   const fahrers = ref<Fahrer[]>([]);
   const stats = ref<FahrerStats>({
-    totalStaff: 28,
-    active: 12,
-    onBreak: 14,
-    onLeave: 2,
+    totalStaff: 0,
+    active: 0,
+    onBreak: 0,
+    onLeave: 0,
   });
+
+  const calculateStats = () => {
+    const totalStaff = fahrers.value.length;
+    const active = fahrers.value.filter((f) => f.status === 'IN_AUSLIEFERUNG').length;
+    const onBreak = fahrers.value.filter((f) => f.status === 'PAUSIERT').length;
+    const onLeave = fahrers.value.filter((f) => f.status === 'URLAUB').length;
+
+    stats.value = {
+      totalStaff,
+      active,
+      onBreak,
+      onLeave,
+    };
+  };
 
   const fetchFahrer = async () => {
     loading.value = true;
@@ -28,6 +42,7 @@ export const useFahrerStore = defineStore('fahrer', () => {
     try {
       const data = await fahrerService.getAll();
       fahrers.value = data;
+      calculateStats();
     } catch (err: any) {
       error.value = err.message || 'Fehler beim Laden der Fahrer.';
       console.error('Error fetching fahrers:', err);

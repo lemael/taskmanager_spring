@@ -1,9 +1,13 @@
 <script setup lang="ts">
-
+import { onMounted } from 'vue';
 import AutoStatusBadge from '@/components/autos/AutoStatusBadge.vue';
 import { useAutoStore } from '@/stores/useAutoStore';
 
 const autoStore = useAutoStore();
+
+onMounted(() => {
+  autoStore.fetchAutos();
+});
 </script>
 
 <template>

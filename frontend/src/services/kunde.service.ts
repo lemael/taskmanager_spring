@@ -11,26 +11,26 @@ export interface Kunde {
 }
 export const kundeService = {
   async getAll(): Promise<Kunde[]> {
-    const response = await apiClient.get<Kunde[]>('/customers');
+    const response = await apiClient.get<Kunde[]>('/kunden');
     return response.data;
   },
 
   async getById(id: string): Promise<Kunde> {
-    const response = await apiClient.get<Kunde>(`/customers/${id}`);
+    const response = await apiClient.get<Kunde>(`/kunden/${id}`);
     return response.data;
   },
 
   async create(customer: Omit<Kunde, 'id'>): Promise<Kunde> {
-    const response = await apiClient.post<Kunde>('/customers', customer);
+    const response = await apiClient.post<Kunde>('/kunden', customer);
     return response.data;
   },
 
   async update(id: number, customer: Partial<Kunde>): Promise<Kunde> {
-    const response = await apiClient.put<Kunde>(`/customers/${id}`, customer);
+    const response = await apiClient.put<Kunde>(`/kunden/${id}`, customer);
     return response.data;
   },
 
   async delete(id: number): Promise<void> {
-    await apiClient.delete(`/customers/${id}`);
+    await apiClient.delete(`/kunden/${id}`);
   },
 };

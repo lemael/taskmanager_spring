@@ -1,6 +1,7 @@
 package com.example.paketmanager.controller;
 
 import com.example.paketmanager.model.Coli;
+import com.example.paketmanager.dto.ColiDto;
 import com.example.paketmanager.service.ColiService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/colis")
-@CrossOrigin(origins = "*")
 public class ColiController {
 
     private final ColiService coliService;
@@ -20,27 +20,27 @@ public class ColiController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Coli>> getAllColis() {
-        return ResponseEntity.ok(coliService.getAllColis());
+    public List<ColiDto> getAllColis() {
+        return coliService.getAllColis();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Coli> getColiById(@PathVariable Long id) {
+    public ResponseEntity<ColiDto> getColiById(@PathVariable Long id) {
         return coliService.getColiById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Coli> createColi(@RequestBody Coli coli) {
+    public ResponseEntity<ColiDto> createColi(@RequestBody Coli coli) {
         return ResponseEntity.status(HttpStatus.CREATED).body(coliService.saveColi(coli));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Coli> updateColi(@PathVariable Long id, @RequestBody Coli coli) {
+    public ResponseEntity<ColiDto> updateColi(@PathVariable Long id, @RequestBody Coli coli) {
         return coliService.getColiById(id)
                 .map(existing -> {
-                    coli.setId(id);
+                    coli.setColiId(id);
                     return ResponseEntity.ok(coliService.saveColi(coli));
                 })
                 .orElse(ResponseEntity.notFound().build());

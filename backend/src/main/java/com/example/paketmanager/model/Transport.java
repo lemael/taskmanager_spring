@@ -2,7 +2,8 @@ package com.example.paketmanager.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.util.List;
 
 @Entity
@@ -22,22 +23,25 @@ public class Transport {
 
     private String zone; // ex: Dortmund-Nord
 
-    private Integer parcelsCount;
+    private Integer colisCount;
 
     private Integer deliveredCount;
 
     @ManyToOne
     @JoinColumn(name = "fahrer_id")
-    private Fahrer driver;
+    @JsonIgnoreProperties("transports")
+    private Fahrer fahrer;
 
     @ManyToOne
     @JoinColumn(name = "auto_id")
-    private Auto vehicle;
+    @JsonIgnoreProperties("transports")
+    private Auto auto;
 
     @Enumerated(EnumType.STRING)
     private TransportStatus status;
 
     @OneToMany(mappedBy = "transport")
+    @JsonIgnoreProperties("transport")
     private List<Coli> colis;
 
     public enum TransportStatus {
@@ -45,5 +49,13 @@ public class Transport {
         PICKED_UP,
         DELIVERED,
         DELAYED
+    }
+
+    public void setTransportId(Long transportId) {
+        this.id = transportId;
+    }
+    @JsonIgnore
+    public Long getTransportId() {
+        return this.id;
     }
 }

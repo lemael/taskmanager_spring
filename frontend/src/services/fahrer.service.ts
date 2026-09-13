@@ -1,14 +1,12 @@
 import apiClient from '@/api/axios.instance';
-import type { Auto } from './auto.service';
 
 export type FahrerStatus = 'IN_AUSLIEFERUNG' | 'PAUSIERT' | 'VERFÜGBAR' | 'URLAUB';
 
 export interface Fahrer {
   id?: number;
   name: string;
-  phone: string;
-  vehicle?: Auto;
-  activeTour: number;
+  licenseClass: string;
+  phoneNumber: string;
   status: FahrerStatus;
 }
 

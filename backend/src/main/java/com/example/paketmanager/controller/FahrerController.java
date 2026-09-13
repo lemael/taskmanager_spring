@@ -1,6 +1,7 @@
 package com.example.paketmanager.controller;
 
 import com.example.paketmanager.model.Fahrer;
+import com.example.paketmanager.dto.FahrerDto;
 import com.example.paketmanager.service.FahrerService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/fahrers")
-@CrossOrigin(origins = "*")
 public class FahrerController {
 
     private final FahrerService fahrerService;
@@ -20,27 +20,27 @@ public class FahrerController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Fahrer>> getAllFahrers() {
-        return ResponseEntity.ok(fahrerService.getAllFahrer());
+    public List<FahrerDto> getAllFahrers() {
+        return fahrerService.getAllFahrer();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Fahrer> getFahrerById(@PathVariable Long id) {
+    public ResponseEntity<FahrerDto> getFahrerById(@PathVariable Long id) {
         return fahrerService.getFahrerById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Fahrer> createFahrer(@RequestBody Fahrer fahrer) {
+    public ResponseEntity<FahrerDto> createFahrer(@RequestBody Fahrer fahrer) {
         return ResponseEntity.status(HttpStatus.CREATED).body(fahrerService.saveFahrer(fahrer));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Fahrer> updateFahrer(@PathVariable Long id, @RequestBody Fahrer fahrer) {
+    public ResponseEntity<FahrerDto> updateFahrer(@PathVariable Long id, @RequestBody Fahrer fahrer) {
         return fahrerService.getFahrerById(id)
                 .map(existing -> {
-                    fahrer.setId(id);
+                    fahrer.setFahrerId(id);
                     return ResponseEntity.ok(fahrerService.saveFahrer(fahrer));
                 })
                 .orElse(ResponseEntity.notFound().build());

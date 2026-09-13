@@ -1,7 +1,12 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import FahrerStatusBadge from '@/components/fahrer/FahrerStatusBadge.vue';
 import { useFahrerStore } from '@/stores/useFahrerStore';
 const fahrerStore = useFahrerStore();
+
+onMounted(() => {
+  fahrerStore.fetchFahrer();
+});
 </script>
 
 <template>
@@ -81,10 +86,7 @@ const fahrerStore = useFahrerStore();
               Kontakt
             </span>
             <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              Zugewiesenes
-            </span>
-            <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-              Laufende Tour
+              Führerschein
             </span>
             <span class="text-xs font-semibold text-gray-500 uppercase tracking-wider">
               Status
@@ -95,13 +97,12 @@ const fahrerStore = useFahrerStore();
           <div
             v-for="(fahrer, index) in fahrerStore.fahrers"
             :key="fahrer.id"
-            class="grid grid-cols-5 px-8 py-4 items-center hover:bg-gray-50/50 transition-colors"
+            class="grid grid-cols-4 px-8 py-4 items-center hover:bg-gray-50/50 transition-colors"
             :class="{ 'border-b border-gray-200': index !== fahrerStore.fahrers.length - 1 }"
           >
             <span class="text-sm font-normal text-gray-900">{{ fahrer.name }}</span>
-            <span class="text-sm font-normal text-gray-900">{{ fahrer.phone }}</span>
-            <span class="text-sm font-normal text-gray-900">{{ fahrer.vehicle }}</span>
-            <span class="text-sm font-normal text-gray-900">{{ fahrer.activeTour }}</span>
+            <span class="text-sm font-normal text-gray-900">{{ fahrer.phoneNumber }}</span>
+            <span class="text-sm font-normal text-gray-900">{{ fahrer.licenseClass }}</span>
             <div>
               <FahrerStatusBadge :status="fahrer.status" />
             </div>
@@ -109,5 +110,5 @@ const fahrerStore = useFahrerStore();
         </div>
       </div>
     </div>
- s
+ 
 </template>

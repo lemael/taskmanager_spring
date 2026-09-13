@@ -1,33 +1,46 @@
 package com.example.paketmanager.service;
 
+import com.example.paketmanager.dto.DtoMapper;
+import com.example.paketmanager.dto.KundeDto;
 import com.example.paketmanager.model.Kunde;
 import com.example.paketmanager.repository.KundeRepository;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
+@Transactional(readOnly = true)
 public class KundeService {
 
     private final KundeRepository kundeRepository;
+    private final DtoMapper dtoMapper;
 
-    public KundeService(KundeRepository kundeRepository) {
+   public KundeService(KundeRepository kundeRepository, DtoMapper dtoMapper) {
         this.kundeRepository = kundeRepository;
+        this.dtoMapper = dtoMapper;
     }
 
-    public List<Kunde> getAllKunden() {
-        return kundeRepository.findAll();
+    public List<KundeDto> getAllKunden() {
+        return kundeRepository.findAll()
+                .stream()
+                .map(dtoMapper::toKundeDto)
+                .collect(Collectors.toList());
     }
 
-    public Optional<Kunde> getKundeById(Long id) {
-        return kundeRepository.findById(id);
+    public Optional<KundeDto> getKundeById(Long id) {
+        return kundeRepository.findById(id)
+                .map(dtoMapper::toKundeDto);
     }
 
-    public Kunde saveKunde(Kunde kunde) {
-        return kundeRepository.save(kunde);
+    @Transactional
+    public KundeDto saveKunde(Kunde kunde) {
+        return dtoMapper.toKundeDto(kundeRepository.save(kunde));
     }
 
+    @Transactional
     public void deleteKunde(Long id) {
         kundeRepository.deleteById(id);
     }

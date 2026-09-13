@@ -11,6 +11,6 @@ import java.util.Optional;
 public interface ColiRepository extends JpaRepository<Coli, Long> {
     Optional<Coli> findByColiNumber(String coliNumber);
     List<Coli> findByStatus(Coli.ColiStatus status);
-    List<Coli> findByKundeKundeId(Long kundeId);
+    List<Coli> findByKundeId(Long kundeId);
     List<Coli> findByTransportId(Long transportId);
 }

@@ -1,6 +1,7 @@
 package com.example.paketmanager.controller;
 
 import com.example.paketmanager.model.Kunde;
+import com.example.paketmanager.dto.KundeDto;
 import com.example.paketmanager.service.KundeService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/kunden")
-@CrossOrigin(origins = "*")
 public class KundeController {
 
     private final KundeService kundeService;
@@ -20,24 +20,24 @@ public class KundeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Kunde>> getAllKunden() {
-        return ResponseEntity.ok(kundeService.getAllKunden());
+    public List<KundeDto> getAllKunden() {
+        return kundeService.getAllKunden();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Kunde> getKundeById(@PathVariable Long id) {
+    public ResponseEntity<KundeDto> getKundeById(@PathVariable Long id) {
         return kundeService.getKundeById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Kunde> createKunde(@RequestBody Kunde kunde) {
+    public ResponseEntity<KundeDto> createKunde(@RequestBody Kunde kunde) {
         return ResponseEntity.status(HttpStatus.CREATED).body(kundeService.saveKunde(kunde));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Kunde> updateKunde(@PathVariable Long id, @RequestBody Kunde kunde) {
+    public ResponseEntity<KundeDto> updateKunde(@PathVariable Long id, @RequestBody Kunde kunde) {
         return kundeService.getKundeById(id)
                 .map(existing -> {
                     kunde.setKundeId(id);

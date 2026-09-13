@@ -21,7 +21,7 @@ export const useDashboardStore = defineStore('dashboard', () => {
   const loading = ref<boolean>(false);
   const error = ref<string | null>(null);
   const transports = ref<Transport[]>([]);
-  const user = ref({ name: 'Thomas Müller', role: 'Dispatcher' });
+  const user = ref({ name: 'Mael Fosso', role: 'Demo' });
 
   const stats = ref<DashboardStats>({
     total: 0,

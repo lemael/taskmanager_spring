@@ -9,7 +9,6 @@ import java.util.List;
 
 @Repository
 public interface AutoRepository extends JpaRepository<Auto, Long> {
-List<Auto> findByName(String name);
-    List<Auto> findByCity(String city);
-    List<Auto> findByContract(String contract);
+    List<Auto> findByStatus(Auto.AutoStatus status);
+    Auto findByPlateNumber(String plateNumber);
 }

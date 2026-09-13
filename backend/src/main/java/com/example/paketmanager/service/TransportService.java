@@ -3,39 +3,56 @@ package com.example.paketmanager.service;
 import com.example.paketmanager.model.Transport;
 import com.example.paketmanager.repository.TransportRepository;
 import org.springframework.stereotype.Service;
+import com.example.paketmanager.dto.TransportDto;
+import com.example.paketmanager.dto.DtoMapper;
+import org.springframework.transaction.annotation.Transactional;
+import java.util.stream.Collectors;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional(readOnly = true)
 public class TransportService {
 
     private final TransportRepository transportRepository;
+    private final DtoMapper dtoMapper;
 
-    public TransportService(TransportRepository transportRepository) {
+    public TransportService(TransportRepository transportRepository, DtoMapper dtoMapper) {
         this.transportRepository = transportRepository;
+        this.dtoMapper = dtoMapper;
     }
 
-    public List<Transport> getAllTransports() {
-        return transportRepository.findAll();
+    public List<TransportDto> getAllTransports() {
+        return transportRepository.findAll()
+                .stream()
+                .map(dtoMapper::toTransportDto)
+                .collect(Collectors.toList());
     }
 
-    public Optional<Transport> getTransportById(Long id) {
-        return transportRepository.findById(id);
+    public Optional<TransportDto> getTransportById(Long id) {
+        return transportRepository.findById(id)
+                .map(dtoMapper::toTransportDto);
     }
 
-    public Optional<Transport> getTransportByNumber(String transportNumber) {
-        return transportRepository.findByTransportNumber(transportNumber);
+    public Optional<TransportDto> getTransportByNumber(String transportNumber) {
+        return transportRepository.findByTransportNumber(transportNumber)
+                .map(dtoMapper::toTransportDto);
     }
 
-    public List<Transport> getTransportsByStatus(Transport.TransportStatus status) {
-        return transportRepository.findByStatus(status);
+    public List<TransportDto> getTransportsByStatus(Transport.TransportStatus status) {
+        return transportRepository.findByStatus(status)
+                .stream()
+                .map(dtoMapper::toTransportDto)
+                .collect(Collectors.toList());
     }
 
-    public Transport saveTransport(Transport transport) {
-        return transportRepository.save(transport);
+    @Transactional
+    public TransportDto saveTransport(Transport transport) {
+        return dtoMapper.toTransportDto(transportRepository.save(transport));
     }
 
+    @Transactional
     public void deleteTransport(Long id) {
         transportRepository.deleteById(id);
     }

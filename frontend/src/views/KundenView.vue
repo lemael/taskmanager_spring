@@ -1,9 +1,14 @@
 <script setup lang="ts">
+import { onMounted } from 'vue';
 import AppLayout from '@/layouts/AppLayout.vue';
 import KundenBadge from '@/components/kunden/KundenBadge.vue';
-import { useCustomerStore } from '@/stores/useKundenStore';
+import { useKundeStore } from '@/stores/useKundeStore';
 
-const customerStore = useCustomerStore();
+const kundeStore = useKundeStore();
+
+onMounted(() => {
+  kundeStore.fetchKunden();
+});
 </script>
 
 <template>
@@ -24,7 +29,7 @@ const customerStore = useCustomerStore();
             Aktive Kunden
           </div>
           <div class="text-2xl font-semibold text-gray-900">
-            {{ customerStore.stats.activeCustomers }}
+            {{ kundeStore.stats.activeKunden }}
           </div>
         </div>
 
@@ -34,7 +39,7 @@ const customerStore = useCustomerStore();
             Lieferung in diesem Monat
           </div>
           <div class="text-2xl font-semibold text-gray-900">
-            {{ customerStore.stats.monthlyDeliveries }}
+            {{ kundeStore.stats.monthlyDeliveries }}
           </div>
         </div>
 
@@ -44,7 +49,7 @@ const customerStore = useCustomerStore();
             Key-Account-Kunden (VIP)
           </div>
           <div class="text-2xl font-semibold text-gray-900">
-            {{ customerStore.stats.vipCustomers }}
+            {{ kundeStore.stats.vipCustomers }}
           </div>
         </div>
       </div>
@@ -84,25 +89,25 @@ const customerStore = useCustomerStore();
 
           <!-- Table Body Rows Grid -->
           <div
-            v-for="(customer, index) in customerStore.customers"
-            :key="customer.id"
+            v-for="(kunde, index) in kundeStore.kunden"
+            :key="kunde.id"
             class="grid grid-cols-[2fr_1.5fr_1.5fr_1.5fr_1.5fr_1fr] px-6 py-4 items-center hover:bg-gray-50/50 transition-colors"
-            :class="{ 'border-b border-gray-200': index !== customerStore.customers.length - 1 }"
+            :class="{ 'border-b border-gray-200': index !== kundeStore.kunden.length - 1 }"
           >
             <div class="text-sm font-medium text-gray-900">
-              {{ customer.name }}
+              {{ kunde.name }}
             </div>
             <div class="text-sm font-normal text-gray-700">
-              {{ customer.mainContact }}
+              {{ kunde.mainContact }}
             </div>
             <div class="text-sm font-normal text-gray-700">
-              {{ customer.city }}
+              {{ kunde.city }}
             </div>
             <div>
-              <KundenBadge :contract="customer.contract" />
+              <KundenBadge :contract="kunde.contract" />
             </div>
             <div class="text-sm font-normal text-gray-700">
-              {{ customer.monthlyVolume }}
+              {{ kunde.monthlyVolume }}
             </div>
             <div class="flex items-center gap-2">
               <button class="p-1 text-gray-400 hover:text-brand-500 transition-colors" title="Détails">

@@ -3,8 +3,11 @@ import apiClient from '@/api/axios.instance';
 export type TransportStatus = 'IN_TRANSIT' | 'PICKED_UP' | 'DELIVERED' | 'DELAYED';
 export interface Transport {
   id: string;
-  fahrer: string;
-  vehicle: string;
+  fahrerId?: number;
+  fahrerName?: string;
+  autoId?: number;
+  autoName?: string;
+  autoPlateNumber?: string;
   zone: string;
   colisCount: number;
   deliveredCount: number;

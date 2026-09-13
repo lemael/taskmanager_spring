@@ -2,6 +2,7 @@ package com.example.paketmanager.controller;
 
 import com.example.paketmanager.model.Auto;
 import com.example.paketmanager.service.AutoService;
+import com.example.paketmanager.dto.AutoDto;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,7 +11,6 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api/autos")
-@CrossOrigin(origins = "*")
 public class AutoController {
 
     private final AutoService autoService;
@@ -20,24 +20,24 @@ public class AutoController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Auto>> getAllAutos() {
-        return ResponseEntity.ok(autoService.getAllAutos());
+    public List<AutoDto> getAllAutos() {
+        return autoService.getAllAutos();
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Auto> getAutoById(@PathVariable Long id) {
+    public ResponseEntity<AutoDto> getAutoById(@PathVariable Long id) {
         return autoService.getAutoById(id)
                 .map(ResponseEntity::ok)
                 .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
-    public ResponseEntity<Auto> createAuto(@RequestBody Auto auto) {
+    public ResponseEntity<AutoDto> createAuto(@RequestBody Auto auto) {
         return ResponseEntity.status(HttpStatus.CREATED).body(autoService.saveAuto(auto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Auto> updateAuto(@PathVariable Long id, @RequestBody Auto auto) {
+    public ResponseEntity<AutoDto> updateAuto(@PathVariable Long id, @RequestBody Auto auto) {
         return autoService.getAutoById(id)
                 .map(existing -> {
                     auto.setId(id);

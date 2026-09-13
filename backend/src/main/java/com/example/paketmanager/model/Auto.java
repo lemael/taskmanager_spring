@@ -2,8 +2,7 @@ package com.example.paketmanager.model;
 
 import jakarta.persistence.*;
 import lombok.*;
-
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "autos")
@@ -20,12 +19,33 @@ public class Auto{
     @Column(nullable = false)
     private String name;
 
-    private String mainContact;
+    @Column(unique = true, nullable = false)
+    private String plateNumber; // ex: DO-PM 102
 
-    private String city;
+    private String model; // ex: MB Sprinter 316
 
-    private String contract; // ex: VIP Express, Standard Pro
+    private String maxCapacity; // ex: 1200 kg / 10 m³
 
-    private String monthlyVolume;
+    private String mileage; // ex: 4500 km
 
+    private String tuvInspection; // ex: 10/2026
+
+    @Enumerated(EnumType.STRING)
+    private AutoStatus status;
+
+    public enum AutoStatus {
+        IM_DIENST,
+        VERFÜGBAR,
+        INSPEKTION,
+        DEFEKT
+    }
+
+    public void setAutoId(Long autoId) {
+        this.id = autoId;
+    }
+
+    @JsonIgnore
+    public Long getAutoId() {
+        return this.id;
+    }
 }

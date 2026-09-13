@@ -10,7 +10,7 @@ export interface KundeStats {
   vipCustomers: number;
 }
 
-export const useKundenStore = defineStore('kunden', () => {
+export const useKundeStore = defineStore('kunden', () => {
   const kunden = ref<Kunde[]>([]);
   const loading = ref<boolean>(false);
   const error = ref<string | null>(null);
@@ -41,6 +41,7 @@ export const useKundenStore = defineStore('kunden', () => {
       const data = await kundeService.getAll();
       kunden.value = data;
       calculateStats();
+      console.log('Fetched kunden:', data);
     } catch (err: any) {
       error.value = err.message || 'Fehler beim Laden der Kunden.';
       console.error('Error fetching kunden:', err);

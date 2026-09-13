@@ -1,9 +1,13 @@
 <script setup lang="ts">
-import AppLayout from '@/layouts/AppLayout.vue';
+import { onMounted } from 'vue';
 import TransportStatusBadge from '@/components/transport/TransportStatusBadge.vue';
 import { useTransportStore } from '@/stores/useTransportStore';
 
 const transportStore = useTransportStore();
+
+onMounted(() => {
+  transportStore.fetchTours();
+});
 </script>
 
 <template>
@@ -103,19 +107,19 @@ const transportStore = useTransportStore();
                 {{ tour.id }}
               </td>
               <td class="px-6 py-4 text-sm font-normal text-gray-900">
-                {{ tour.driver }}
+                {{ tour.fahrerName }}
               </td>
               <td class="px-6 py-4 text-sm font-normal text-gray-900">
-                {{ tour.vehicle }}
+                {{ tour.autoName }}
               </td>
               <td class="px-6 py-4 text-sm font-normal text-gray-900">
                 {{ tour.zone }}
               </td>
               <td class="px-6 py-4 text-sm font-normal text-gray-900">
-                {{ tour.parcelsCount }} colis
+                {{ tour.colisCount }} colis
               </td>
               <td class="px-6 py-4 text-sm font-normal text-gray-900">
-                {{ tour.deliveredCount }}/{{ tour.parcelsCount }} geliefert
+                {{ tour.deliveredCount }}/{{ tour.colisCount }} geliefert
               </td>
               <td class="px-6 py-4">
                 <TransportStatusBadge :status="tour.status" />

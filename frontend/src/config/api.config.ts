@@ -1,5 +1,5 @@
 export const API_CONFIG = {
-  baseURL: import.meta.env.VITE_API_BASE_URL,
+  baseURL: import.meta.env.VITE_API_BASE_URL || "https://backend-production-32fb.up.railway.app/api" ,
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',

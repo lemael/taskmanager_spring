@@ -56,7 +56,7 @@ onMounted(() => {
           v-for="(transport, index) in store.recentTransports(5)"
           :key="transport.id"
           class="grid grid-cols-3 px-6 py-5 items-center"
-          :class="{ 'border-b border-gray-200': index !== store.recentTransports.length - 1 }"
+          :class="{ 'border-b border-gray-200': index !== store.recentTransports(5).length - 1 }"
         >
           <span class="text-sm text-gray-700 font-medium">{{ transport.id }}</span>
           <span class="text-sm text-gray-700">{{ transport.fahrerName }}</span>

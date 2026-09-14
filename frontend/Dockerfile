@@ -2,11 +2,9 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 
-# Dans frontend/Dockerfile
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
 
-# Copie du code source et build de production (Vite)
 COPY . .
 RUN npm run build
 
@@ -20,7 +18,9 @@ RUN rm -rf ./*
 # Copie des fichiers compilés (dist) depuis la phase de build
 COPY --from=builder /app/dist .
 
-# Exposition du port Nginx
+# ✅ Copie de la configuration Nginx personnalisée pour gérer Vue Router
+COPY nginx.conf /etc/nginx/conf.d/default.conf
+
 EXPOSE 80
 
 CMD ["nginx", "-g", "daemon off;"]

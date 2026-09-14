@@ -2,6 +2,10 @@
 FROM node:22-alpine AS builder
 WORKDIR /app
 
+# ✅ Déclarer l'argument de build pour l'URL API Railway
+ARG VITE_API_BASE_URL=https://backend-production-32fb.up.railway.app/api
+ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
+
 COPY package*.json ./
 RUN npm install --legacy-peer-deps
 
